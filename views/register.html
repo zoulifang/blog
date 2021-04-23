@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Signin Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
+    <!-- Custom styles for this template -->
+    <link href="/public/css/signin.css" rel="stylesheet" type="text/css">
+
+
+  </head>
+
+  <body>
+
+    <div class="container">
+
+      <form class="form-signin" action="/register" method="post">
+        <h2 class="form-signin-heading">用户注册</h2>
+        <div>
+        <label for="nickname">昵称</label>
+        <input type="text" id="nickName" name='nickName' placeholder="Nickname" class="form-control" required autofocus>
+        <div id='spanUsername'></div>
+        </div>
+       
+        <label for="email" >邮箱</label>
+        <input type="email" id="email" name='email' class="form-control" placeholder="Email address" required >
+        <label for="password">密码</label>
+        <input type="password" id="password" name='password' class="form-control" placeholder="Password" required> 
+        <button class="btn btn-lg btn-primary btn-block" type="submit">注册</button>
+        <div>已有账号?<a href="/login">登录</a>  </div> 
+      </form>
+
+    </div> <!-- /container -->
+
+  </body>
+
+  <script>
+    window.onload=function (){
+        //用户名合法判断
+        const c1=document.getElementById('nickName')
+        const c2=document.getElementById('spanUsername')
+        const isOK = /^(([a-zA-Z0-9]){4,16})$/;
+        c1.onblur=function (){
+            if (!isOK.test(c1.value)){
+                c2.innerText='用户名只能由数字字母组成的6-9位的字符串'
+                c2.style.color='red'
+            }else if (c1.value !== ''){
+                c2.innerText='用户名合法'
+                c2.style.color='green'
+            }
+        }
+        
+    }
+
+  </script>
+
+</html>
