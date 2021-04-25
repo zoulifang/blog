@@ -83,7 +83,8 @@ router.get('/',(req,res)=>{
 })
 
 router.get('/logout',(req,res)=>{
-  req.session.user = null
+  // req.session.user = null
+  delete req.session.user
   res.redirect('/')
 })
 
