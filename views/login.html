@@ -17,7 +17,7 @@
 
     <!-- Custom styles for this template -->
     <link href="/public/css/signin.css" rel="stylesheet" type="text/css">
-
+    <script src='../node_modules/jquery/dist/jquery.js'></script>
 
   </head>
 
@@ -25,22 +25,55 @@
 
     <div class="container">
 
-      <form class="form-signin">
+      <form class="form-signin" id='login'>
         <!-- <h2 class="form-signin-heading"></h2> -->
         <label for="email" class="sr-only">Email address</label>
-        <input type="email" id="email" class="form-control" placeholder="Email address" required autofocus>
-        <label for="password" class="sr-only">Password</label>
-        <input type="password" id="password" class="form-control" placeholder="Password" required>
+        <input type="email" name="email" id="email" class="form-control" placeholder="Email address" required autofocus>
+        <label for="password"  class="sr-only">Password</label>
+        <input type="password" name='password' id="password" class="form-control" placeholder="Password" required>
         <div class="checkbox">
           <label>
             <input type="checkbox" value="remember-me"> 记住密码
           </label>
         </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+
        <div>还没有账号?<a href="/register">注册</a>  </div> 
       </form>
 
     </div> <!-- /container -->
+
+    <script>
+      
+    $('form').on('submit',(e)=>{
+     
+      e.preventDefault()
+      // .serialize() 方法创建以标准 URL 编码表示的文本字符串。它的操作对象是代表表单元素集合的 jQuery 对象。
+      const formData = $('#login').serialize()
+     
+      $.ajax({
+        url:'/login',
+        type:'post',
+        data:formData,
+        datatype:'json',
+        success:function(data){     
+          const err_code = data.err_code
+          if(err_code===0){
+            //注册成功，直接跳转到首页
+            window.location.href='/'
+          }else if(err_code===1){
+            window.alert('用户不存在或者密码错误')
+          }else{
+            window.alert('服务器忙，请稍后重试')
+          }
+        }
+      })
+      
+  
+    })
+    </script>
+
+
 
   </body>
 </html>

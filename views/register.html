@@ -13,11 +13,10 @@
 
     <!-- Bootstrap core CSS -->
     <link href="/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-
-
+  
     <!-- Custom styles for this template -->
     <link href="/public/css/signin.css" rel="stylesheet" type="text/css">
-
+    <script src="/node_modules/jquery/dist/jquery.js"></script>
 
   </head>
 
@@ -25,7 +24,7 @@
 
     <div class="container">
 
-      <form class="form-signin" action="/register" method="post">
+      <form class="form-signin" id='signin'>
         <h2 class="form-signin-heading">用户注册</h2>
         <div>
         <label for="nickname">昵称</label>
@@ -43,7 +42,8 @@
 
     </div> <!-- /container -->
 
-  </body>
+
+ <!-- <script scr='../node_modules/jquery/dist/jquery.js'></script> -->
 
   <script>
     window.onload=function (){
@@ -63,6 +63,36 @@
         
     }
 
-  </script>
 
+  $('form').on('submit',(e)=>{
+   
+    e.preventDefault()
+    // .serialize() 方法创建以标准 URL 编码表示的文本字符串。它的操作对象是代表表单元素集合的 jQuery 对象。
+    const formData = $('#signin').serialize()
+
+    $.ajax({
+      url:'/register',
+      type:'post',
+      data:formData,
+      datatype:'json',
+      success:function(data){     
+        const err_code = data.err_code
+        if(err_code===0){
+          window.alert('注册成功')
+          //注册成功，直接跳转到首页
+          window.location.href='/'
+        }else if(err_code===1){
+          window.alert('用户邮箱已经注册过了')
+        }else{
+          window.alert('服务器忙，请稍后重试')
+        }
+      }
+    })
+    
+
+  })
+  </script>
+ 
+  </body>
+ 
 </html>
